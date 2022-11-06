@@ -1,0 +1,11 @@
+POST http://localhost:3600/reduce-balance
+Content-Type: application/x-www-form-urlencoded
+
+aid=1&balance=100
+
+###
+
+GET http://localhost:3600/2
+Accept: application/json
+
+###
