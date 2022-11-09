@@ -17,17 +17,22 @@ mybatis:
   config-location: classpath:mybatis-config.xml
 
 seata:
-  application-id: ${spring.application.name} # Seata 应用编号，默认为 ${spring.application.name}
-  tx-service-group: service-group # Seata 事务组编号，用于 TC 集群名
+  application-id: ${spring.application.name} # Seata 应用编号，默认为 ${spring.application.name},可以省略
+  # 在本微服务内部定义的 Seata 事务分组名称（其可见范围只限于本微服务内部）
+  # 此名字做为"钩子"与 sevice.vgroup-mapping 的 key 部分相对应
+  # 实际可以解释如下： tx-server-group=[seata server 地址]+[cluster name],但为了保证灵活性，加了一层 vgroup-mapping
+  tx-service-group: projectA
   # Seata 服务配置项，对应 ServiceProperties 类
   service:
-    # 虚拟组和分组的映射
     vgroup-mapping:
-      service-group: default
+      projectA: default #tx-service-group 映射到本文件的 seata.registry.nacos.cluster的 value部分
   # Seata 注册中心配置项，对应 RegistryProperties 类
   registry:
     type: nacos # 注册中心类型，默认为 file
     nacos:
-      cluster: default # 使用的 Seata 分组
+      application: seata-server #默认值
+      group: SEATA_GROUP #默认值
       namespace: # Nacos 命名空间
       serverAddr: localhost:8848 # Nacos 服务地址
+
+      cluster: default # default 做为"钩子"与 seata server 启动配置中的 seata.registry.nacos.cluster 在相对应

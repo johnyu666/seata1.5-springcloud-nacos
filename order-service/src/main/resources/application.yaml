@@ -18,12 +18,12 @@ mybatis:
 
 seata:
   application-id: ${spring.application.name} # Seata 应用编号，默认为 ${spring.application.name}
-  tx-service-group: service-group # Seata 事务组编号，用于 TC 集群名
+  tx-service-group: projectA # Seata 事务组编号，用于 TC 集群名
   # Seata 服务配置项，对应 ServiceProperties 类
   service:
     # 虚拟组和分组的映射
     vgroup-mapping:
-      service-group: default
+      projectA: default
   # Seata 注册中心配置项，对应 RegistryProperties 类
   registry:
     type: nacos # 注册中心类型，默认为 file
