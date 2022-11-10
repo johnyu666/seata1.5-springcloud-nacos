@@ -5,7 +5,7 @@ aid=1&balance=100
 
 ###
 
-GET http://localhost:3600/2
+GET http://localhost:3600/findBalance?aid=1
 Accept: application/json
 
 ###

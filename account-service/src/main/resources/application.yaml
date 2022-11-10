@@ -9,10 +9,25 @@ spring:
         group: SEATA_GROUP
         server-addr: 127.0.0.1
   datasource:
-    url: jdbc:mysql://localhost:3306/x_account
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: 123
+    type: com.alibaba.druid.pool.DruidDataSource
+    dynamic:
+      primary: master
+      seata: true
+      datasource:
+        master:
+          url: jdbc:mysql://localhost:3306/x_account
+          driver-class-name: com.mysql.jdbc.Driver
+          username: root
+          password: 123
+
+        slave: #读库，可以使用从库的url地址
+          url: jdbc:mysql://localhost:3306/x_account
+          driver-class-name: com.mysql.jdbc.Driver
+          username: tony #只读帐号 tony
+          password: 123
+          # 创建一个只读账号进行模拟：
+          # CREATE USER tony IDENTIFIED BY '123';
+          # GRANT SELECT ON *.* TO tony  WITH GRANT OPTION;
 mybatis:
   config-location: classpath:mybatis-config.xml
 
